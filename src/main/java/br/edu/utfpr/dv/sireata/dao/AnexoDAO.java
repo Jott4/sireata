@@ -11,34 +11,12 @@ import java.util.List;
 import br.edu.utfpr.dv.sireata.model.Anexo;
 
 public class AnexoDAO {
+	private DefaultDAO dao = new DefaultDAO();
 	
 	public Anexo buscarPorId(int id) throws SQLException{
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		
-		try{
-			conn = ConnectionDAO.getInstance().getConnection();
-			stmt = conn.prepareStatement("SELECT anexos.* FROM anexos " +
+		ResultSet rs = dao.buscarPorId(id, "SELECT anexos.* FROM anexos " +
 				"WHERE idAnexo = ?");
-		
-			stmt.setInt(1, id);
-			
-			rs = stmt.executeQuery();
-			
-			if(rs.next()){
-				return this.carregarObjeto(rs);
-			}else{
-				return null;
-			}
-		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
-		}
+		return this.carregarObjeto(rs);
 	}
 	
 	public List<Anexo> listarPorAta(int idAta) throws SQLException{

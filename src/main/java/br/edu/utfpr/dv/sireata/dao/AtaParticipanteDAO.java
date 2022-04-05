@@ -11,35 +11,15 @@ import java.util.List;
 import br.edu.utfpr.dv.sireata.model.AtaParticipante;
 
 public class AtaParticipanteDAO {
-	
+	private DefaultDAO dao = new DefaultDAO();
+
 	public AtaParticipante buscarPorId(int id) throws SQLException{
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		
-		try{
-			conn = ConnectionDAO.getInstance().getConnection();
-			stmt = conn.prepareStatement("SELECT ataparticipantes.*, usuarios.nome AS nomeParticipante FROM ataparticipantes " +
+		ResultSet rs = dao.buscarPorId(id, "SELECT ataparticipantes.*, usuarios.nome AS nomeParticipante FROM ataparticipantes " +
 				"INNER JOIN usuarios ON usuarios.idUsuario=ataparticipantes.idUsuario " +
 				"WHERE idAtaParticipante = ?");
-		
-			stmt.setInt(1, id);
-			
-			rs = stmt.executeQuery();
-			
-			if(rs.next()){
-				return this.carregarObjeto(rs);
-			}else{
-				return null;
-			}
-		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
-		}
+
+		return this.carregarObjeto(rs);
+
 	}
 	
 	public List<AtaParticipante> listarPorAta(int idAta) throws SQLException{

@@ -8,38 +8,17 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.edu.utfpr.dv.sireata.model.Orgao;
 import br.edu.utfpr.dv.sireata.model.Pauta;
 
 public class PautaDAO {
-	
+	private DefaultDAO dao = new DefaultDAO();
+
 	public Pauta buscarPorId(int id) throws SQLException{
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		
-		try{
-			conn = ConnectionDAO.getInstance().getConnection();
-			stmt = conn.prepareStatement("SELECT * FROM pautas WHERE idPauta = ?");
-		
-			stmt.setInt(1, id);
-			
-			rs = stmt.executeQuery();
-			
-			if(rs.next()){
-				return this.carregarObjeto(rs);
-			}else{
-				return null;
-			}
-		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
-		}
+		ResultSet rs = dao.buscarPorId(id, "SELECT * FROM pautas WHERE idPauta = ?");
+		return this.carregarObjeto(rs);
 	}
-	
+
 	public List<Pauta> listarPorAta(int idAta) throws SQLException{
 		Connection conn = null;
 		Statement stmt = null;

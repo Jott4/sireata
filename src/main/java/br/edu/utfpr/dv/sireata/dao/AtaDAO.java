@@ -14,39 +14,16 @@ import br.edu.utfpr.dv.sireata.model.Ata.TipoAta;
 import br.edu.utfpr.dv.sireata.util.DateUtils;
 
 public class AtaDAO {
-	
+	private DefaultDAO dao = new DefaultDAO();
+
 	public Ata buscarPorId(int id) throws SQLException{
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		
-		try{
-			conn = ConnectionDAO.getInstance().getConnection();
-			stmt = conn.prepareStatement(
-						"SELECT atas.*, orgaos.nome AS orgao, p.nome AS presidente, s.nome AS secretario " +
-						"FROM atas INNER JOIN orgaos ON orgaos.idOrgao=atas.idOrgao " +
-						"INNER JOIN departamentos ON departamentos.idDepartamento=orgaos.idDepartamento " +
-						"INNER JOIN usuarios p ON p.idUsuario=atas.idPresidente " +
-						"INNER JOIN usuarios s ON s.idUsuario=atas.idSecretario " +
-						"WHERE idAta = ?");
-			
-			stmt.setInt(1, id);
-			
-			rs = stmt.executeQuery();
-			
-			if(rs.next()){
-				return this.carregarObjeto(rs);
-			}else{
-				return null;
-			}
-		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
-		}
+		ResultSet rs = dao.buscarPorId(id, "SELECT atas.*, orgaos.nome AS orgao, p.nome AS presidente, s.nome AS secretario " +
+				"FROM atas INNER JOIN orgaos ON orgaos.idOrgao=atas.idOrgao " +
+				"INNER JOIN departamentos ON departamentos.idDepartamento=orgaos.idDepartamento " +
+				"INNER JOIN usuarios p ON p.idUsuario=atas.idPresidente " +
+				"INNER JOIN usuarios s ON s.idUsuario=atas.idSecretario " +
+				"WHERE idAta = ?");
+		return this.carregarObjeto(rs);
 	}
 	
 	public Ata buscarPorNumero(int idOrgao, TipoAta tipo, int numero, int ano) throws SQLException{

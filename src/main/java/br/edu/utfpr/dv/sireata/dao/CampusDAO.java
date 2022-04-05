@@ -9,36 +9,15 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.edu.utfpr.dv.sireata.model.Anexo;
 import br.edu.utfpr.dv.sireata.model.Campus;
 
 public class CampusDAO {
-	
+	private DefaultDAO dao = new DefaultDAO();
+
 	public Campus buscarPorId(int id) throws SQLException{
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		
-		try{
-			conn = ConnectionDAO.getInstance().getConnection();
-			stmt = conn.prepareStatement("SELECT * FROM campus WHERE idCampus = ?");
-		
-			stmt.setInt(1, id);
-			
-			rs = stmt.executeQuery();
-			
-			if(rs.next()){
-				return this.carregarObjeto(rs);
-			}else{
-				return null;
-			}
-		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
-		}
+		ResultSet rs = dao.buscarPorId(id, "SELECT * FROM campus WHERE idCampus = ?");
+		return this.carregarObjeto(rs);
 	}
 	
 	public Campus buscarPorDepartamento(int idDepartamento) throws SQLException{

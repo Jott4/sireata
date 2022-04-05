@@ -8,45 +8,25 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.edu.utfpr.dv.sireata.model.Comentario;
 import br.edu.utfpr.dv.sireata.model.Orgao;
 import br.edu.utfpr.dv.sireata.model.OrgaoMembro;
 import br.edu.utfpr.dv.sireata.model.Usuario;
 
 public class OrgaoDAO {
-	
+
+	private DefaultDAO dao = new DefaultDAO();
+
 	public Orgao buscarPorId(int id) throws SQLException{
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		
-		try{
-			conn = ConnectionDAO.getInstance().getConnection();
-			stmt = conn.prepareStatement(
-				"SELECT orgaos.*, p.nome AS presidente, s.nome AS secretario, departamentos.nome AS departamento FROM orgaos " +
+		ResultSet rs = dao.buscarPorId(id, "SELECT orgaos.*, p.nome AS presidente, s.nome AS secretario, departamentos.nome AS departamento FROM orgaos " +
 				"INNER JOIN departamentos ON departamentos.iddepartamento=orgaos.iddepartamento " +
 				"INNER JOIN usuarios p ON p.idusuario=orgaos.idpresidente " +
 				"INNER JOIN usuarios s ON s.idusuario=orgaos.idsecretario " +
 				"WHERE orgaos.idOrgao = ?");
-		
-			stmt.setInt(1, id);
-			
-			rs = stmt.executeQuery();
-			
-			if(rs.next()){
-				return this.carregarObjeto(rs);
-			}else{
-				return null;
-			}
-		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
-		}
+		return this.carregarObjeto(rs);
 	}
-	
+
+
 	public List<Orgao> listarTodos(boolean apenasAtivos) throws SQLException{
 		Connection conn = null;
 		Statement stmt = null;
