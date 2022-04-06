@@ -12,7 +12,7 @@ import br.edu.utfpr.dv.sireata.model.Anexo;
 
 public class AnexoDAO {
 	private DefaultDAO dao = new DefaultDAO();
-	
+
 	public Anexo buscarPorId(int id) throws SQLException{
 		ResultSet rs = dao.buscarPorId(id, "SELECT anexos.* FROM anexos " +
 				"WHERE idAnexo = ?");
@@ -94,20 +94,7 @@ public class AnexoDAO {
 	}
 	
 	public void excluir(int id) throws SQLException{
-		Connection conn = null;
-		Statement stmt = null;
-		
-		try{
-			conn = ConnectionDAO.getInstance().getConnection();
-			stmt = conn.createStatement();
-		
-			stmt.execute("DELETE FROM anexos WHERE idanexo=" + String.valueOf(id));
-		}finally{
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
-		}
+		dao.excluir(id, "DELETE FROM anexos WHERE idAnexo =");
 	}
 	
 	private Anexo carregarObjeto(ResultSet rs) throws SQLException{

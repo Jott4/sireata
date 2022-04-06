@@ -1,9 +1,6 @@
 package br.edu.utfpr.dv.sireata.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class DefaultDAO {
 
@@ -35,4 +32,21 @@ public class DefaultDAO {
         }
     }
 
+
+    public void excluir(int id, String sql) throws SQLException{
+        Connection conn = null;
+        Statement stmt = null;
+
+        try{
+            conn = ConnectionDAO.getInstance().getConnection();
+            stmt = conn.createStatement();
+
+            stmt.execute(sql + String.valueOf(id));
+        }finally{
+            if((stmt != null) && !stmt.isClosed())
+                stmt.close();
+            if((conn != null) && !conn.isClosed())
+                conn.close();
+        }
+    }
 }

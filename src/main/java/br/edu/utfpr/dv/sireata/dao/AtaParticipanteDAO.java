@@ -100,20 +100,7 @@ public class AtaParticipanteDAO {
 	}
 	
 	public void excluir(int id) throws SQLException{
-		Connection conn = null;
-		Statement stmt = null;
-		
-		try{
-			conn = ConnectionDAO.getInstance().getConnection();
-			stmt = conn.createStatement();
-		
-			stmt.execute("DELETE FROM ataparticipantes WHERE idAtaParticipante=" + String.valueOf(id));
-		}finally{
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
-		}
+		dao.excluir(id, "DELETE FROM ataparticipantes WHERE idAtaParticipante=");
 	}
 	
 	private AtaParticipante carregarObjeto(ResultSet rs) throws SQLException{
