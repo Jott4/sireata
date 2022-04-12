@@ -10,6 +10,7 @@ import java.util.List;
 
 import br.edu.utfpr.dv.sireata.model.Pauta;
 import br.edu.utfpr.dv.sireata.model.Usuario;
+import br.edu.utfpr.dv.sireata.util.ConnectionUtils;
 
 public class UsuarioDAO {
 	
@@ -67,12 +68,7 @@ public class UsuarioDAO {
 				return "";
 			}
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			ConnectionUtils.closeConnections(rs, stmt, conn);
 		}
 	}
 	
@@ -130,12 +126,7 @@ public class UsuarioDAO {
 			
 			return list;
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+		ConnectionUtils.closeConnections(rs, stmt, conn);
 		}
 	}
 	

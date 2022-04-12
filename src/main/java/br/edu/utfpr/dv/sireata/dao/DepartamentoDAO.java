@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.edu.utfpr.dv.sireata.model.Departamento;
+import br.edu.utfpr.dv.sireata.util.ConnectionUtils;
 
 public class DepartamentoDAO {
 	private DefaultDAO dao = new DefaultDAO();
@@ -45,12 +46,7 @@ public class DepartamentoDAO {
 				return null;
 			}
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			ConnectionUtils.closeConnections(rs, stmt, conn);
 		}
 	}
 
@@ -75,12 +71,7 @@ public class DepartamentoDAO {
 
 			return list;
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			ConnectionUtils.closeConnections(rs, stmt, conn);
 		}
 	}
 
@@ -105,12 +96,7 @@ public class DepartamentoDAO {
 
 			return list;
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			ConnectionUtils.closeConnections(rs, stmt, conn);
 		}
 	}
 
@@ -137,12 +123,7 @@ public class DepartamentoDAO {
 
 			return list;
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			ConnectionUtils.closeConnections(rs, stmt, conn);
 		}
 	}
 
@@ -171,12 +152,7 @@ public class DepartamentoDAO {
 
 			return list;
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			ConnectionUtils.closeConnections(rs, stmt, conn);
 		}
 	}
 
@@ -222,12 +198,7 @@ public class DepartamentoDAO {
 
 			return departamento.getIdDepartamento();
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			ConnectionUtils.closeConnections(rs, stmt, conn);
 		}
 	}
 

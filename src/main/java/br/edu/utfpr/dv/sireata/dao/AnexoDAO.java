@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.edu.utfpr.dv.sireata.model.Anexo;
+import br.edu.utfpr.dv.sireata.util.ConnectionUtils;
 
 public class AnexoDAO {
 	private DefaultDAO dao = new DefaultDAO();
@@ -18,7 +19,9 @@ public class AnexoDAO {
 				"WHERE idAnexo = ?");
 		return this.carregarObjeto(rs);
 	}
-	
+
+
+
 	public List<Anexo> listarPorAta(int idAta) throws SQLException{
 		Connection conn = null;
 		Statement stmt = null;
@@ -39,12 +42,7 @@ public class AnexoDAO {
 			
 			return list;
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			ConnectionUtils.closeConnections(rs, stmt, conn);
 		}
 	}
 	
@@ -84,12 +82,7 @@ public class AnexoDAO {
 			
 			return anexo.getIdAnexo();
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			ConnectionUtils.closeConnections(rs, stmt, conn);
 		}
 	}
 	

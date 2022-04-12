@@ -11,6 +11,7 @@ import java.util.List;
 import br.edu.utfpr.dv.sireata.model.Campus;
 import br.edu.utfpr.dv.sireata.model.Comentario;
 import br.edu.utfpr.dv.sireata.model.Comentario.SituacaoComentario;
+import br.edu.utfpr.dv.sireata.util.ConnectionUtils;
 
 public class ComentarioDAO {
 	private DefaultDAO dao = new DefaultDAO();
@@ -39,12 +40,7 @@ public class ComentarioDAO {
 				return null;
 			}
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			ConnectionUtils.closeConnections(rs, stmt, conn);
 		}
 	}
 	

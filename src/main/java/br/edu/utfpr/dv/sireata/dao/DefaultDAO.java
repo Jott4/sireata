@@ -1,5 +1,7 @@
 package br.edu.utfpr.dv.sireata.dao;
 
+import br.edu.utfpr.dv.sireata.util.ConnectionUtils;
+
 import java.sql.*;
 
 public class DefaultDAO {
@@ -23,12 +25,7 @@ public class DefaultDAO {
                 return null;
             }
         }finally{
-            if((rs != null) && !rs.isClosed())
-                rs.close();
-            if((stmt != null) && !stmt.isClosed())
-                stmt.close();
-            if((conn != null) && !conn.isClosed())
-                conn.close();
+            ConnectionUtils.closeConnections(rs, stmt, conn);
         }
     }
 
