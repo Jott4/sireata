@@ -16,9 +16,8 @@ public class ComentarioBO {
 			
 			return dao.buscarPorId(id);
 		}catch(Exception e){
-			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-			
-			throw new Exception(e.getMessage());
+			LoggerUtils.LogAndExcept(e);
+			return null;
 		}
 	}
 	
@@ -28,9 +27,8 @@ public class ComentarioBO {
 			
 			return dao.buscarPorUsuario(idUsuario, idPauta);
 		}catch(Exception e){
-			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-			
-			throw new Exception(e.getMessage());
+			LoggerUtils.LogAndExcept(e);
+			return null;
 		}
 	}
 	
@@ -40,9 +38,8 @@ public class ComentarioBO {
 			
 			return dao.listarPorPauta(idPauta);
 		}catch(Exception e){
-			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-			
-			throw new Exception(e.getMessage());
+			LoggerUtils.LogAndExcept(e);
+			return null;
 		}
 	}
 	
@@ -67,9 +64,8 @@ public class ComentarioBO {
 			
 			return dao.salvar(comentario);
 		}catch(Exception e){
-			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-			
-			throw new Exception(e.getMessage());
+			LoggerUtils.LogAndExcept(e);
+			return null;
 		}
 	}
 

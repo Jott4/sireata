@@ -17,9 +17,8 @@ public class OrgaoBO {
 			
 			return dao.buscarPorId(id);
 		}catch(Exception e){
-			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-			
-			throw new Exception(e.getMessage());
+			LoggerUtils.LogAndExcept(e);
+			return null;
 		}
 	}
 	
@@ -29,9 +28,8 @@ public class OrgaoBO {
 			
 			return dao.listarTodos(apenasAtivos);
 		}catch(Exception e){
-			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-			
-			throw new Exception(e.getMessage());
+			LoggerUtils.LogAndExcept(e);
+			return null;
 		}
 	}
 	
@@ -41,9 +39,8 @@ public class OrgaoBO {
 			
 			return dao.listarPorDepartamento(idDepartamento);
 		}catch(Exception e){
-			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-			
-			throw new Exception(e.getMessage());
+			LoggerUtils.LogAndExcept(e);
+			return null;
 		}
 	}
 	
@@ -53,9 +50,8 @@ public class OrgaoBO {
 			
 			return dao.listarPorCampus(idCampus);
 		}catch(Exception e){
-			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-			
-			throw new Exception(e.getMessage());
+			LoggerUtils.LogAndExcept(e);
+			return null;
 		}
 	}
 	
@@ -65,9 +61,8 @@ public class OrgaoBO {
 			
 			return dao.listarParaCriacaoAta(idDepartamento, idUsuario);
 		}catch(Exception e){
-			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-			
-			throw new Exception(e.getMessage());
+			LoggerUtils.LogAndExcept(e);
+			return null;
 		}
 	}
 	
@@ -77,9 +72,8 @@ public class OrgaoBO {
 			
 			return dao.listarParaConsultaAtas(idDepartamento, idUsuario);
 		}catch(Exception e){
-			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-			
-			throw new Exception(e.getMessage());
+			LoggerUtils.LogAndExcept(e);
+			return null;
 		}
 	}
 	
@@ -99,9 +93,8 @@ public class OrgaoBO {
 			
 			return dao.buscarPresidente(idOrgao);
 		}catch(Exception e){
-			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-			
-			throw new Exception(e.getMessage());
+			LoggerUtils.LogAndExcept(e);
+			return null;
 		}
 	}
 	
@@ -111,9 +104,8 @@ public class OrgaoBO {
 			
 			return dao.buscarSecretario(idOrgao);
 		}catch(Exception e){
-			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-			
-			throw new Exception(e.getMessage());
+			LoggerUtils.LogAndExcept(e);
+			return null;
 		}
 	}
 	
@@ -123,9 +115,8 @@ public class OrgaoBO {
 			
 			return dao.isMembro(idOrgao, idUsuario);
 		}catch(Exception e){
-			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-			
-			throw new Exception(e.getMessage());
+			LoggerUtils.LogAndExcept(e);
+			return null;
 		}
 	}
 	
@@ -163,9 +154,8 @@ public class OrgaoBO {
 			
 			return dao.salvar(orgao);
 		}catch(Exception e){
-			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-			
-			throw new Exception(e.getMessage());
+			LoggerUtils.LogAndExcept(e);
+			return null;
 		}
 	}
 

@@ -23,9 +23,8 @@ public class UsuarioBO {
 			
 			return dao.listarTodos(apenasAtivos);
 		} catch (SQLException e) {
-			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-			
-			throw new Exception(e.getMessage());
+			LoggerUtils.LogAndExcept(e);
+			return null;
 		}
 	}
 	
@@ -35,9 +34,8 @@ public class UsuarioBO {
 			
 			return dao.listar(nome.trim(), apenasAtivos, apenasExternos);
 		}catch(SQLException e){
-			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-			
-			throw new Exception(e.getMessage());
+			LoggerUtils.LogAndExcept(e);
+			return null;
 		}
 	}
 	
@@ -57,9 +55,8 @@ public class UsuarioBO {
 			
 			return dao.salvar(usuario);
 		} catch (SQLException e) {
-			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-			
-			throw new Exception(e.getMessage());
+			LoggerUtils.LogAndExcept(e);
+			return null;
 		}
 	}
 	
@@ -85,9 +82,8 @@ public class UsuarioBO {
 			
 			return dao.buscarPorLogin(login);
 		} catch (SQLException e) {
-			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-			
-			throw new Exception(e.getMessage());
+			LoggerUtils.LogAndExcept(e);
+			return null;
 		}
 	}
 	
@@ -97,9 +93,8 @@ public class UsuarioBO {
 			
 			return dao.buscarPorId(id);
 		} catch (SQLException e) {
-			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-			
-			throw new Exception(e.getMessage());
+			LoggerUtils.LogAndExcept(e);
+			return null;
 		}
 	}
 	
@@ -109,9 +104,8 @@ public class UsuarioBO {
 			
 			return dao.buscarEmail(id);
 		} catch (SQLException e) {
-			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-			
-			throw new Exception(e.getMessage());
+			LoggerUtils.LogAndExcept(e);
+			return null;
 		}
 	}
 	
@@ -141,9 +135,8 @@ public class UsuarioBO {
 			
 			return usuario;
 		} catch (SQLException e) {
-			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-			
-			throw new Exception(e.getMessage());
+			LoggerUtils.LogAndExcept(e);
+			return null;
 		}
 	}
 	
@@ -244,9 +237,8 @@ public class UsuarioBO {
 			
 			return dao.podeCriarAta(idUsuario);
 		} catch (SQLException e) {
-			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-			
-			throw new Exception(e.getMessage());
+			LoggerUtils.LogAndExcept(e);
+			return null;
 		}
 	}
 	

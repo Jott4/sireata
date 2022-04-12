@@ -15,9 +15,8 @@ public class PautaBO {
 			
 			return dao.buscarPorId(id);
 		}catch(Exception e){
-			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-			
-			throw new Exception(e.getMessage());
+			LoggerUtils.LogAndExcept(e);
+			return null;
 		}
 	}
 	
@@ -27,9 +26,8 @@ public class PautaBO {
 			
 			return dao.listarPorAta(idAta);
 		}catch(Exception e){
-			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-			
-			throw new Exception(e.getMessage());
+			LoggerUtils.LogAndExcept(e);
+			return null;
 		}
 	}
 	
@@ -51,9 +49,8 @@ public class PautaBO {
 			
 			return dao.salvar(pauta);
 		}catch(Exception e){
-			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-			
-			throw new Exception(e.getMessage());
+			LoggerUtils.LogAndExcept(e);
+			return null;
 		}
 	}
 	
@@ -67,9 +64,8 @@ public class PautaBO {
 			
 			dao.excluir(id);
 		}catch(Exception e){
-			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-			
-			throw new Exception(e.getMessage());
+			LoggerUtils.LogAndExcept(e);
+			return null;
 		}
 	}
 

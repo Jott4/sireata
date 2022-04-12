@@ -15,9 +15,8 @@ public class CampusBO {
 			
 			return dao.buscarPorId(id);
 		}catch(Exception e){
-			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-			
-			throw new Exception(e.getMessage());
+			LoggerUtils.LogAndExcept(e);
+			return null;
 		}
 	}
 	
@@ -27,9 +26,8 @@ public class CampusBO {
 			
 			return dao.buscarPorDepartamento(idDepartamento);
 		}catch(Exception e){
-			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-			
-			throw new Exception(e.getMessage());
+			LoggerUtils.LogAndExcept(e);
+			return null;
 		}
 	}
 	
@@ -39,9 +37,8 @@ public class CampusBO {
 			
 			return dao.listarTodos(apenasAtivos);
 		}catch(Exception e){
-			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-			
-			throw new Exception(e.getMessage());
+			LoggerUtils.LogAndExcept(e);
+			return null;
 		}
 	}
 	
@@ -51,9 +48,8 @@ public class CampusBO {
 			
 			return dao.listarParaCriacaoAta(idUsuario);
 		}catch(Exception e){
-			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-			
-			throw new Exception(e.getMessage());
+			LoggerUtils.LogAndExcept(e);
+			return null;
 		}
 	}
 	
@@ -63,9 +59,8 @@ public class CampusBO {
 			
 			return dao.listarParaConsultaAtas(idUsuario);
 		}catch(Exception e){
-			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-			
-			throw new Exception(e.getMessage());
+			LoggerUtils.LogAndExcept(e);
+			return null;
 		}
 	}
 	
@@ -79,9 +74,8 @@ public class CampusBO {
 			
 			return dao.salvar(campus);
 		}catch(Exception e){
-			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-			
-			throw new Exception(e.getMessage());
+			LoggerUtils.LogAndExcept(e);
+			return null;
 		}
 	}
 
