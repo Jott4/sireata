@@ -7,23 +7,23 @@ public abstract class BOFactory {
 
     public static AbstractDAO<? extends Object> from(DataRetriever dataRetriever) {
         switch (dataRetriever) {
-            case AnexoDAO:
+            case Anexo:
                 return new AnexoDAO();
-            case AtaDAO:
+            case Ata:
                 return new AtaDAO();
-            case AtaParticipanteDAO:
+            case AtaParticipante:
                 return new AtaParticipanteDAO();
-            case CampusDAO:
+            case Campus:
                 return new CampusDAO();
-            case ComentarioDAO:
+            case Comentario:
                 return new ComentarioDAO();
-            case DepartamentoDAO:
+            case Departamento:
                 return new DepartamentoDAO();
-            case OrgaoDAO:
+            case Orgao:
                 return new OrgaoDAO();
-            case PautaDAO:
+            case Pauta:
                 return new PautaDAO();
-            case UsuarioDAO:
+            case Usuario:
                 return new UsuarioDAO();
 
         }
@@ -34,15 +34,15 @@ public abstract class BOFactory {
     public abstract AbstractDAO getCreatorDAO();
 
     public enum DataRetriever {
-        AnexoDAO,
-        AtaDAO,
-        AtaParticipanteDAO,
-        CampusDAO,
-        ComentarioDAO,
-        DepartamentoDAO,
-        OrgaoDAO,
-        PautaDAO,
-        UsuarioDAO
+        Anexo,
+        Ata,
+        AtaParticipante,
+        Campus,
+        Comentario,
+        Departamento,
+        Orgao,
+        Pauta,
+        Usuario
     }
 
 }
