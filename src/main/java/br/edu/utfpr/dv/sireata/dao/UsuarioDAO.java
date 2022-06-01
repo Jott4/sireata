@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UsuarioDAO extends AbstractDAO<Usuario> {
+public class UsuarioDAO implements AbstractDAO<Usuario> {
 
     private final DefaultDAO dao = new DefaultDAO();
 
@@ -34,7 +34,6 @@ public class UsuarioDAO extends AbstractDAO<Usuario> {
         }
     }
 
-    @Override
     public Usuario buscarPorId(int id) throws SQLException {
         ResultSet rs = dao.buscarPorId(id, "SELECT * FROM usuarios WHERE idUsuario = ?");
         return this.carregarObjeto(rs);
@@ -116,7 +115,6 @@ public class UsuarioDAO extends AbstractDAO<Usuario> {
         }
     }
 
-    @Override
     public int salvar(Usuario usuario) throws SQLException {
         boolean insert = (usuario.getIdUsuario() == 0);
         Connection conn = null;

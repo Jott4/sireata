@@ -7,10 +7,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PautaDAO extends AbstractDAO<Pauta> {
+public class PautaDAO implements AbstractDAO<Pauta> {
     private final DefaultDAO dao = new DefaultDAO();
 
-    @Override
+
     public Pauta buscarPorId(int id) throws SQLException {
         ResultSet rs = dao.buscarPorId(id, "SELECT * FROM pautas WHERE idPauta = ?");
         return this.carregarObjeto(rs);
@@ -39,7 +39,7 @@ public class PautaDAO extends AbstractDAO<Pauta> {
         }
     }
 
-    @Override
+
     public int salvar(Pauta pauta) throws SQLException {
         boolean insert = (pauta.getIdPauta() == 0);
         Connection conn = null;

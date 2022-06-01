@@ -8,10 +8,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ComentarioDAO extends AbstractDAO<Comentario> {
+public class ComentarioDAO implements AbstractDAO<Comentario> {
     private final DefaultDAO dao = new DefaultDAO();
 
-    @Override
     public Comentario buscarPorId(int id) throws SQLException {
         ResultSet rs = dao.buscarPorId(id, "SELECT * FROM comentarios WHERE idComentario = ?");
         return this.carregarObjeto(rs);
@@ -65,7 +64,6 @@ public class ComentarioDAO extends AbstractDAO<Comentario> {
         }
     }
 
-    @Override
     public int salvar(Comentario comentario) throws SQLException {
         boolean insert = (comentario.getIdComentario() == 0);
         Connection conn = null;

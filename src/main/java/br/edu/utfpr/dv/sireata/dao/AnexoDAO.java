@@ -7,10 +7,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AnexoDAO extends AbstractDAO<Anexo> {
+public class AnexoDAO implements AbstractDAO<Anexo> {
     private final DefaultDAO dao = new DefaultDAO();
 
-    @Override
     public Anexo buscarPorId(int id) throws SQLException {
         ResultSet rs = dao.buscarPorId(id, "SELECT anexos.* FROM anexos " +
                 "WHERE idAnexo = ?");
@@ -42,7 +41,6 @@ public class AnexoDAO extends AbstractDAO<Anexo> {
         }
     }
 
-    @Override
     public int salvar(Anexo anexo) throws SQLException {
         boolean insert = (anexo.getIdAnexo() == 0);
         Connection conn = null;

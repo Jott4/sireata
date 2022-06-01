@@ -7,10 +7,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AtaParticipanteDAO extends AbstractDAO<AtaParticipante> {
+public class AtaParticipanteDAO implements AbstractDAO<AtaParticipante> {
     private final DefaultDAO dao = new DefaultDAO();
 
-    @Override
+
     public AtaParticipante buscarPorId(int id) throws SQLException {
         ResultSet rs = dao.buscarPorId(id, "SELECT ataparticipantes.*, usuarios.nome AS nomeParticipante FROM ataparticipantes " +
                 "INNER JOIN usuarios ON usuarios.idUsuario=ataparticipantes.idUsuario " +
@@ -44,8 +44,6 @@ public class AtaParticipanteDAO extends AbstractDAO<AtaParticipante> {
             ConnectionUtils.closeConnections(rs, stmt, conn);
         }
     }
-
-    @Override
     public int salvar(AtaParticipante participante) throws SQLException {
         boolean insert = (participante.getIdAtaParticipante() == 0);
         Connection conn = null;

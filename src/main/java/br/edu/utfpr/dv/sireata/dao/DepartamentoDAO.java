@@ -7,10 +7,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DepartamentoDAO extends AbstractDAO<Departamento> {
+public class DepartamentoDAO implements AbstractDAO<Departamento> {
     private final DefaultDAO dao = new DefaultDAO();
 
-    @Override
     public Departamento buscarPorId(int id) throws SQLException {
         ResultSet rs = dao.buscarPorId(id, "SELECT departamentos.*, campus.nome AS nomeCampus " +
                 "FROM departamentos INNER JOIN campus ON campus.idCampus=departamentos.idCampus " +
@@ -152,7 +151,6 @@ public class DepartamentoDAO extends AbstractDAO<Departamento> {
         }
     }
 
-    @Override
     public int salvar(Departamento departamento) throws SQLException {
         boolean insert = (departamento.getIdDepartamento() == 0);
         Connection conn = null;

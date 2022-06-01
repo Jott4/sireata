@@ -9,7 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AtaDAO extends AbstractDAO<Ata> {
+public class AtaDAO implements AbstractDAO<Ata> {
     private final DefaultDAO dao = new DefaultDAO();
 
     @Override
