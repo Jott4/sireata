@@ -1,5 +1,6 @@
 package br.edu.utfpr.dv.sireata.bo;
 
+import br.edu.utfpr.dv.sireata.dao.AbstractDAO;
 import br.edu.utfpr.dv.sireata.dao.ComentarioDAO;
 import br.edu.utfpr.dv.sireata.model.Comentario;
 import br.edu.utfpr.dv.sireata.model.Comentario.SituacaoComentario;
@@ -7,13 +8,11 @@ import br.edu.utfpr.dv.sireata.util.LoggerUtils;
 
 import java.util.List;
 
-public class ComentarioBO {
+public class ComentarioBO extends BOFactory {
 
     public Comentario buscarPorId(int id) throws Exception {
         try {
-            ComentarioDAO dao = new ComentarioDAO();
-
-            return dao.buscarPorId(id);
+            return getCreatorDAO().buscarPorId(id);
         } catch (Exception e) {
             LoggerUtils.LogAndExcept(e);
             return null;
@@ -73,13 +72,16 @@ public class ComentarioBO {
 
             this.validarDados(comentario);
 
-            ComentarioDAO dao = new ComentarioDAO();
 
-            return dao.salvar(comentario);
+            return getCreatorDAO().salvar(comentario);
         } catch (Exception e) {
             LoggerUtils.LogAndExcept(e);
             return 0;
         }
     }
 
+    @Override
+    public AbstractDAO<Comentario> getCreatorDAO() {
+        return new ComentarioDAO();
+    }
 }

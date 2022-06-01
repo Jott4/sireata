@@ -1,5 +1,6 @@
 package br.edu.utfpr.dv.sireata.bo;
 
+import br.edu.utfpr.dv.sireata.dao.AbstractDAO;
 import br.edu.utfpr.dv.sireata.dao.UsuarioDAO;
 import br.edu.utfpr.dv.sireata.ldap.LdapConfig;
 import br.edu.utfpr.dv.sireata.ldap.LdapUtils;
@@ -15,7 +16,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class UsuarioBO {
+public class UsuarioBO extends BOFactory {
 
     public List<Usuario> listarTodos(boolean apenasAtivos) throws Exception {
         try {
@@ -89,9 +90,7 @@ public class UsuarioBO {
 
     public Usuario buscarPorId(int id) throws Exception {
         try {
-            UsuarioDAO dao = new UsuarioDAO();
-
-            return dao.buscarPorId(id);
+            return getCreatorDAO().buscarPorId(id);
         } catch (SQLException e) {
             LoggerUtils.LogAndExcept(e);
             return null;
@@ -114,8 +113,7 @@ public class UsuarioBO {
             String hashAtual = StringUtils.generateSHA3Hash(senhaAtual);
             String novoHash = StringUtils.generateSHA3Hash(novaSenha);
 
-            UsuarioDAO dao = new UsuarioDAO();
-            Usuario usuario = dao.buscarPorId(idUsuario);
+            Usuario usuario = getCreatorDAO().buscarPorId(idUsuario);
 
             if (usuario == null) {
                 throw new Exception("Usuário não encontrado.");
@@ -131,7 +129,7 @@ public class UsuarioBO {
             }
 
             usuario.setSenha(novoHash);
-            dao.salvar(usuario);
+            getCreatorDAO().salvar(usuario);
 
             return usuario;
         } catch (SQLException e) {
@@ -242,4 +240,8 @@ public class UsuarioBO {
         }
     }
 
+    @Override
+    public AbstractDAO<Usuario> getCreatorDAO() {
+        return new UsuarioDAO();
+    }
 }

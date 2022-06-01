@@ -17,13 +17,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class AtaBO {
+public class AtaBO extends BOFactory {
+
 
     public Ata buscarPorId(int id) throws Exception {
         try {
-            AtaDAO dao = new AtaDAO();
-
-            return dao.buscarPorId(id);
+            return getCreatorDAO().buscarPorId(id);
         } catch (Exception e) {
             LoggerUtils.LogAndExcept(e);
             return null;
@@ -178,9 +177,7 @@ public class AtaBO {
 
     public int salvar(Ata ata) throws Exception {
         try {
-            AtaDAO dao = new AtaDAO();
-
-            int id = dao.salvar(ata);
+            int id = getCreatorDAO().salvar(ata);
 
             if (ata.getPauta() != null) {
                 int i = 1;
@@ -481,4 +478,8 @@ public class AtaBO {
         return resultado;
     }
 
+    @Override
+    public AbstractDAO<Ata> getCreatorDAO() {
+        return new AtaDAO();
+    }
 }

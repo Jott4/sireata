@@ -1,18 +1,18 @@
 package br.edu.utfpr.dv.sireata.bo;
 
+import br.edu.utfpr.dv.sireata.dao.AbstractDAO;
 import br.edu.utfpr.dv.sireata.dao.AnexoDAO;
 import br.edu.utfpr.dv.sireata.model.Anexo;
 import br.edu.utfpr.dv.sireata.util.LoggerUtils;
 
 import java.util.List;
 
-public class AnexoBO {
+public class AnexoBO extends BOFactory {
+
 
     public Anexo buscarPorId(int id) throws Exception {
         try {
-            AnexoDAO dao = new AnexoDAO();
-
-            return dao.buscarPorId(id);
+            return getCreatorDAO().buscarPorId(id);
         } catch (Exception e) {
             LoggerUtils.LogAndExcept(e);
             return null;
@@ -51,9 +51,8 @@ public class AnexoBO {
 
             this.validarDados(anexo);
 
-            AnexoDAO dao = new AnexoDAO();
 
-            return dao.salvar(anexo);
+            return getCreatorDAO().salvar(anexo);
         } catch (Exception e) {
             LoggerUtils.LogAndExcept(e);
             return 0;
@@ -75,4 +74,8 @@ public class AnexoBO {
         }
     }
 
+    @Override
+    public AbstractDAO<Anexo> getCreatorDAO() {
+        return new AnexoDAO();
+    }
 }

@@ -1,18 +1,18 @@
 package br.edu.utfpr.dv.sireata.bo;
 
+import br.edu.utfpr.dv.sireata.dao.AbstractDAO;
 import br.edu.utfpr.dv.sireata.dao.AtaParticipanteDAO;
 import br.edu.utfpr.dv.sireata.model.AtaParticipante;
 import br.edu.utfpr.dv.sireata.util.LoggerUtils;
 
 import java.util.List;
 
-public class AtaParticipanteBO {
+public class AtaParticipanteBO extends BOFactory {
 
     public AtaParticipante buscarPorId(int id) throws Exception {
         try {
-            AtaParticipanteDAO dao = new AtaParticipanteDAO();
+            return getCreatorDAO().buscarPorId(id);
 
-            return dao.buscarPorId(id);
         } catch (Exception e) {
             LoggerUtils.LogAndExcept(e);
             return null;
@@ -62,9 +62,8 @@ public class AtaParticipanteBO {
 
             this.validarDados(participante);
 
-            AtaParticipanteDAO dao = new AtaParticipanteDAO();
 
-            return dao.salvar(participante);
+            return getCreatorDAO().salvar(participante);
         } catch (Exception e) {
             LoggerUtils.LogAndExcept(e);
             return 0;
@@ -85,4 +84,8 @@ public class AtaParticipanteBO {
         }
     }
 
+    @Override
+    public AbstractDAO<AtaParticipante> getCreatorDAO() {
+        return new AtaParticipanteDAO();
+    }
 }

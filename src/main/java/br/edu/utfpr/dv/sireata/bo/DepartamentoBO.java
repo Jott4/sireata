@@ -1,18 +1,17 @@
 package br.edu.utfpr.dv.sireata.bo;
 
+import br.edu.utfpr.dv.sireata.dao.AbstractDAO;
 import br.edu.utfpr.dv.sireata.dao.DepartamentoDAO;
 import br.edu.utfpr.dv.sireata.model.Departamento;
 import br.edu.utfpr.dv.sireata.util.LoggerUtils;
 
 import java.util.List;
 
-public class DepartamentoBO {
+public class DepartamentoBO extends BOFactory {
 
     public Departamento buscarPorId(int id) throws Exception {
         try {
-            DepartamentoDAO dao = new DepartamentoDAO();
-
-            return dao.buscarPorId(id);
+            return getCreatorDAO().buscarPorId(id);
         } catch (Exception e) {
             LoggerUtils.LogAndExcept(e);
             return null;
@@ -87,13 +86,15 @@ public class DepartamentoBO {
         }
 
         try {
-            DepartamentoDAO dao = new DepartamentoDAO();
-
-            return dao.salvar(departamento);
+            return getCreatorDAO().salvar(departamento);
         } catch (Exception e) {
             LoggerUtils.LogAndExcept(e);
             return 0;
         }
     }
 
+    @Override
+    public AbstractDAO<Departamento> getCreatorDAO() {
+        return new DepartamentoDAO();
+    }
 }

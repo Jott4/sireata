@@ -1,5 +1,6 @@
 package br.edu.utfpr.dv.sireata.bo;
 
+import br.edu.utfpr.dv.sireata.dao.AbstractDAO;
 import br.edu.utfpr.dv.sireata.dao.OrgaoDAO;
 import br.edu.utfpr.dv.sireata.model.Orgao;
 import br.edu.utfpr.dv.sireata.model.OrgaoMembro;
@@ -8,13 +9,11 @@ import br.edu.utfpr.dv.sireata.util.LoggerUtils;
 
 import java.util.List;
 
-public class OrgaoBO {
+public class OrgaoBO extends BOFactory {
 
     public Orgao buscarPorId(int id) throws Exception {
         try {
-            OrgaoDAO dao = new OrgaoDAO();
-
-            return dao.buscarPorId(id);
+            return getCreatorDAO().buscarPorId(id);
         } catch (Exception e) {
             LoggerUtils.LogAndExcept(e);
             return null;
@@ -164,13 +163,15 @@ public class OrgaoBO {
         }
 
         try {
-            OrgaoDAO dao = new OrgaoDAO();
-
-            return dao.salvar(orgao);
+            return getCreatorDAO().salvar(orgao);
         } catch (Exception e) {
             LoggerUtils.LogAndExcept(e);
             return 0;
         }
     }
 
+    @Override
+    public AbstractDAO<Orgao> getCreatorDAO() {
+        return new OrgaoDAO();
+    }
 }

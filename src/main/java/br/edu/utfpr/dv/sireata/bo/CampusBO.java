@@ -1,18 +1,17 @@
 package br.edu.utfpr.dv.sireata.bo;
 
+import br.edu.utfpr.dv.sireata.dao.AbstractDAO;
 import br.edu.utfpr.dv.sireata.dao.CampusDAO;
 import br.edu.utfpr.dv.sireata.model.Campus;
 import br.edu.utfpr.dv.sireata.util.LoggerUtils;
 
 import java.util.List;
 
-public class CampusBO {
+public class CampusBO extends BOFactory {
 
     public Campus buscarPorId(int id) throws Exception {
         try {
-            CampusDAO dao = new CampusDAO();
-
-            return dao.buscarPorId(id);
+            return getCreatorDAO().buscarPorId(id);
         } catch (Exception e) {
             LoggerUtils.LogAndExcept(e);
             return null;
@@ -69,13 +68,17 @@ public class CampusBO {
         }
 
         try {
-            CampusDAO dao = new CampusDAO();
 
-            return dao.salvar(campus);
+
+            return getCreatorDAO().salvar(campus);
         } catch (Exception e) {
             LoggerUtils.LogAndExcept(e);
             return 0;
         }
     }
 
+    @Override
+    public AbstractDAO<Campus> getCreatorDAO() {
+        return new CampusDAO();
+    }
 }
