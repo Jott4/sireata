@@ -1,20 +1,16 @@
 package br.edu.utfpr.dv.sireata.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-
-import br.edu.utfpr.dv.sireata.model.Orgao;
 import br.edu.utfpr.dv.sireata.model.Pauta;
 import br.edu.utfpr.dv.sireata.util.ConnectionUtils;
 
-public class PautaDAO {
-    private DefaultDAO dao = new DefaultDAO();
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
+public class PautaDAO extends AbstractDAO<Pauta> {
+    private final DefaultDAO dao = new DefaultDAO();
+
+    @Override
     public Pauta buscarPorId(int id) throws SQLException {
         ResultSet rs = dao.buscarPorId(id, "SELECT * FROM pautas WHERE idPauta = ?");
         return this.carregarObjeto(rs);
@@ -29,7 +25,7 @@ public class PautaDAO {
             conn = ConnectionDAO.getInstance().getConnection();
             stmt = conn.createStatement();
 
-            rs = stmt.executeQuery("SELECT * FROM pautas WHERE idAta=" + String.valueOf(idAta) + " ORDER BY ordem");
+            rs = stmt.executeQuery("SELECT * FROM pautas WHERE idAta=" + idAta + " ORDER BY ordem");
 
             List<Pauta> list = new ArrayList<Pauta>();
 
@@ -39,10 +35,11 @@ public class PautaDAO {
 
             return list;
         } finally {
-           ConnectionUtils.closeConnections(rs, stmt, conn);
+            ConnectionUtils.closeConnections(rs, stmt, conn);
         }
     }
 
+    @Override
     public int salvar(Pauta pauta) throws SQLException {
         boolean insert = (pauta.getIdPauta() == 0);
         Connection conn = null;

@@ -7,9 +7,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CampusDAO {
+public class CampusDAO extends AbstractDAO<Campus> {
     private final DefaultDAO dao = new DefaultDAO();
 
+    @Override
     public Campus buscarPorId(int id) throws SQLException {
         ResultSet rs = dao.buscarPorId(id, "SELECT * FROM campus WHERE idCampus = ?");
         return this.carregarObjeto(rs);
@@ -117,6 +118,7 @@ public class CampusDAO {
         }
     }
 
+    @Override
     public int salvar(Campus campus) throws SQLException {
         boolean insert = (campus.getIdCampus() == 0);
         Connection conn = null;

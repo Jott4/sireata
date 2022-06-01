@@ -8,117 +8,119 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ComentarioDAO {
-	private final DefaultDAO dao = new DefaultDAO();
+public class ComentarioDAO extends AbstractDAO<Comentario> {
+    private final DefaultDAO dao = new DefaultDAO();
 
-	public Comentario buscarPorId(int id) throws SQLException {
-		ResultSet rs = dao.buscarPorId(id, "SELECT * FROM comentarios WHERE idComentario = ?");
-		return this.carregarObjeto(rs);
-	}
+    @Override
+    public Comentario buscarPorId(int id) throws SQLException {
+        ResultSet rs = dao.buscarPorId(id, "SELECT * FROM comentarios WHERE idComentario = ?");
+        return this.carregarObjeto(rs);
+    }
 
-	public Comentario buscarPorUsuario(int idUsuario, int idPauta) throws SQLException {
-		Connection conn = null;
-		Statement stmt = null;
-		ResultSet rs = null;
+    public Comentario buscarPorUsuario(int idUsuario, int idPauta) throws SQLException {
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
 
-		try {
-			conn = ConnectionDAO.getInstance().getConnection();
-			stmt = conn.createStatement();
+        try {
+            conn = ConnectionDAO.getInstance().getConnection();
+            stmt = conn.createStatement();
 
-			rs = stmt.executeQuery("SELECT comentarios.*, usuarios.nome AS nomeUsuario FROM comentarios " +
-					"INNER JOIN usuarios ON usuarios.idUsuario=comentarios.idUsuario " +
-					"WHERE comentarios.idPauta=" + idPauta + " AND comentarios.idUsuario=" + idUsuario);
+            rs = stmt.executeQuery("SELECT comentarios.*, usuarios.nome AS nomeUsuario FROM comentarios " +
+                    "INNER JOIN usuarios ON usuarios.idUsuario=comentarios.idUsuario " +
+                    "WHERE comentarios.idPauta=" + idPauta + " AND comentarios.idUsuario=" + idUsuario);
 
-			if (rs.next()) {
-				return this.carregarObjeto(rs);
-			} else {
-				return null;
-			}
-		} finally {
-			ConnectionUtils.closeConnections(rs, stmt, conn);
-		}
-	}
+            if (rs.next()) {
+                return this.carregarObjeto(rs);
+            } else {
+                return null;
+            }
+        } finally {
+            ConnectionUtils.closeConnections(rs, stmt, conn);
+        }
+    }
 
-	public List<Comentario> listarPorPauta(int idPauta) throws SQLException {
-		Connection conn = null;
-		Statement stmt = null;
-		ResultSet rs = null;
+    public List<Comentario> listarPorPauta(int idPauta) throws SQLException {
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
 
-		try {
-			conn = ConnectionDAO.getInstance().getConnection();
-			stmt = conn.createStatement();
+        try {
+            conn = ConnectionDAO.getInstance().getConnection();
+            stmt = conn.createStatement();
 
-			rs = stmt.executeQuery("SELECT comentarios.*, usuarios.nome AS nomeUsuario FROM comentarios " +
-					"INNER JOIN usuarios ON usuarios.idUsuario=comentarios.idUsuario " +
-					"WHERE comentarios.idPauta=" + idPauta + " ORDER BY usuarios.nome");
+            rs = stmt.executeQuery("SELECT comentarios.*, usuarios.nome AS nomeUsuario FROM comentarios " +
+                    "INNER JOIN usuarios ON usuarios.idUsuario=comentarios.idUsuario " +
+                    "WHERE comentarios.idPauta=" + idPauta + " ORDER BY usuarios.nome");
 
-			List<Comentario> list = new ArrayList<Comentario>();
+            List<Comentario> list = new ArrayList<Comentario>();
 
-			while (rs.next()) {
-				list.add(this.carregarObjeto(rs));
-			}
+            while (rs.next()) {
+                list.add(this.carregarObjeto(rs));
+            }
 
-			return list;
-		} finally {
-			ConnectionUtils.closeConnections(rs, stmt, conn);
-		}
-	}
+            return list;
+        } finally {
+            ConnectionUtils.closeConnections(rs, stmt, conn);
+        }
+    }
 
-	public int salvar(Comentario comentario) throws SQLException {
-		boolean insert = (comentario.getIdComentario() == 0);
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
+    @Override
+    public int salvar(Comentario comentario) throws SQLException {
+        boolean insert = (comentario.getIdComentario() == 0);
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
 
-		try {
-			conn = ConnectionDAO.getInstance().getConnection();
+        try {
+            conn = ConnectionDAO.getInstance().getConnection();
 
-			if (insert) {
-				stmt = conn.prepareStatement("INSERT INTO comentarios(idPauta, idUsuario, situacao, comentarios, situacaoComentarios, motivo) VALUES(?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
-			} else {
-				stmt = conn.prepareStatement("UPDATE comentarios SET idPauta=?, idUsuario=?, situacao=?, comentarios=?, situacaoComentarios=?, motivo=? WHERE idComentario=?");
-			}
+            if (insert) {
+                stmt = conn.prepareStatement("INSERT INTO comentarios(idPauta, idUsuario, situacao, comentarios, situacaoComentarios, motivo) VALUES(?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+            } else {
+                stmt = conn.prepareStatement("UPDATE comentarios SET idPauta=?, idUsuario=?, situacao=?, comentarios=?, situacaoComentarios=?, motivo=? WHERE idComentario=?");
+            }
 
-			stmt.setInt(1, comentario.getPauta().getIdPauta());
-			stmt.setInt(2, comentario.getUsuario().getIdUsuario());
-			stmt.setInt(3, comentario.getSituacao().getValue());
-			stmt.setString(4, comentario.getComentarios());
-			stmt.setInt(5, comentario.getSituacaoComentarios().getValue());
-			stmt.setString(6, comentario.getMotivo());
+            stmt.setInt(1, comentario.getPauta().getIdPauta());
+            stmt.setInt(2, comentario.getUsuario().getIdUsuario());
+            stmt.setInt(3, comentario.getSituacao().getValue());
+            stmt.setString(4, comentario.getComentarios());
+            stmt.setInt(5, comentario.getSituacaoComentarios().getValue());
+            stmt.setString(6, comentario.getMotivo());
 
-			if (!insert) {
-				stmt.setInt(7, comentario.getIdComentario());
-			}
+            if (!insert) {
+                stmt.setInt(7, comentario.getIdComentario());
+            }
 
-			stmt.execute();
+            stmt.execute();
 
-			if (insert) {
-				rs = stmt.getGeneratedKeys();
+            if (insert) {
+                rs = stmt.getGeneratedKeys();
 
-				if (rs.next()) {
-					comentario.setIdComentario(rs.getInt(1));
-				}
-			}
+                if (rs.next()) {
+                    comentario.setIdComentario(rs.getInt(1));
+                }
+            }
 
-			return comentario.getIdComentario();
-		} finally {
-			ConnectionUtils.closeConnections(rs, stmt, conn);
-		}
-	}
+            return comentario.getIdComentario();
+        } finally {
+            ConnectionUtils.closeConnections(rs, stmt, conn);
+        }
+    }
 
-	private Comentario carregarObjeto(ResultSet rs) throws SQLException {
-		Comentario comentario = new Comentario();
+    private Comentario carregarObjeto(ResultSet rs) throws SQLException {
+        Comentario comentario = new Comentario();
 
-		comentario.setIdComentario(rs.getInt("idComentario"));
-		comentario.getPauta().setIdPauta(rs.getInt("idPauta"));
-		comentario.getUsuario().setIdUsuario(rs.getInt("idUsuario"));
-		comentario.getUsuario().setNome(rs.getString("nomeUsuario"));
-		comentario.setSituacao(SituacaoComentario.valueOf(rs.getInt("situacao")));
-		comentario.setComentarios(rs.getString("comentarios"));
-		comentario.setSituacaoComentarios(SituacaoComentario.valueOf(rs.getInt("situacaoComentarios")));
-		comentario.setMotivo(rs.getString("motivo"));
+        comentario.setIdComentario(rs.getInt("idComentario"));
+        comentario.getPauta().setIdPauta(rs.getInt("idPauta"));
+        comentario.getUsuario().setIdUsuario(rs.getInt("idUsuario"));
+        comentario.getUsuario().setNome(rs.getString("nomeUsuario"));
+        comentario.setSituacao(SituacaoComentario.valueOf(rs.getInt("situacao")));
+        comentario.setComentarios(rs.getString("comentarios"));
+        comentario.setSituacaoComentarios(SituacaoComentario.valueOf(rs.getInt("situacaoComentarios")));
+        comentario.setMotivo(rs.getString("motivo"));
 
-		return comentario;
-	}
+        return comentario;
+    }
 
 }

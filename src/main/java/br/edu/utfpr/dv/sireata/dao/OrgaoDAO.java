@@ -9,10 +9,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrgaoDAO {
+public class OrgaoDAO extends AbstractDAO<Orgao> {
 
     private final DefaultDAO dao = new DefaultDAO();
 
+    @Override
     public Orgao buscarPorId(int id) throws SQLException {
         ResultSet rs = dao.buscarPorId(id, "SELECT orgaos.*, p.nome AS presidente, s.nome AS secretario, departamentos.nome AS departamento FROM orgaos " +
                 "INNER JOIN departamentos ON departamentos.iddepartamento=orgaos.iddepartamento " +
@@ -241,6 +242,7 @@ public class OrgaoDAO {
         }
     }
 
+    @Override
     public int salvar(Orgao orgao) throws SQLException {
         boolean insert = (orgao.getIdOrgao() == 0);
         Connection conn = null;
